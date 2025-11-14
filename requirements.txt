@@ -1,0 +1,59 @@
+# ======================
+# CORE ML & DATA SCIENCE
+# ======================
+tensorflow
+scikit-learn
+pandas
+numpy
+
+# ======================
+# VISUALIZATION & NOTEBOOKS
+# ======================
+matplotlib
+seaborn
+jupyterlab
+ipython
+
+# ======================
+# MODEL SERIALIZATION & UTILITIES
+# ======================
+h5py
+joblib
+pydot
+graphviz
+
+# ======================
+# API & DEPLOYMENT
+# ======================
+fastapi
+uvicorn
+pydantic
+requests
+
+# ======================
+# DEVELOPMENT & TESTING
+# ======================
+pytest
+pytest-cov
+flake8
+
+# ======================
+# MORE ADVANCED
+# ======================
+# For model interpretability
+# shap
+# lime
+
+# For hyperparameter tuning  
+# optuna
+
+# For experiment tracking
+# mlflow
+
+# For computer vision
+# opencv-python
+# Pillow
+
+# For NLP
+# nltk
+# transformers

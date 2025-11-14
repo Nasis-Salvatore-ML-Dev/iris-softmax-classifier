@@ -1,0 +1,97 @@
+# -----------------------
+# Python general ignores
+# -----------------------
+__pycache__/
+*.py[cod]
+\*.pyc
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# -----------------------
+# Virtual environments
+# -----------------------
+.venv/
+venv/
+env/
+tf_env_clean/
+
+
+# -----------------------
+# Jupyter notebooks
+# -----------------------
+.ipynb_checkpoints/
+notebooks/
+
+# -----------------------
+# OS and editor artifacts
+# -----------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# -----------------------
+# Data and model artifacts
+# -----------------------
+data/
+artifacts/
+images/
+*.pkl
+*.h5
+*.joblib
+*.csv
+*.tsv
+*.npy
+*.npz
+
+# -----------------------
+# Credentials and secrets
+# -----------------------
+.github/erasmus-472716-e1461659a2a0.json
+*.json
+*.yaml
+*.yml
+*.env
+secrets/
+config.json
+
+# -----------------------
+# Logs and temporary files
+# -----------------------
+*.log
+logs/
+tmp/
+temp/
+
+# -----------------------
+# Docker and cloud build outputs
+# -----------------------
+*.tar
+*.gz
+*.zip
+.cache/
+__docker_build__/
+cloudbuild.yaml
+
+# -----------------------
+# Private documentation
+# -----------------------
+docs/runbook.md
+deployment_and_operations_guide.md
+
+# -----------------------
+# Ignore compiled tests or reports
+# -----------------------
+coverage/
+htmlcov/
+*.coverage
+test-output/
+

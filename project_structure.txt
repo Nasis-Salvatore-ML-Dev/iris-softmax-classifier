@@ -1,0 +1,43 @@
+iris-softmax-classifier/
+├── .github/
+│   └── workflows/
+│       └── main.yml                # CI/CD pipeline for automated testing and deployment.
+├── data/
+│   └── iris.csv                    # Raw Iris dataset used for training (CSV with header).
+├── notebooks/
+│   └── exploratory_data_analysis.ipynb  # Jupyter notebook for EDA and visualization (includes save_fig()).
+├── src/
+│   ├── __init__.py
+│   ├── config.py                   # Central configuration: paths, model name, training params.
+│   ├── data_processing.py          # Loading and preparing data (train/test split, scaler).
+│   ├── model.py                    # Softmax regression model wrapper (training/predict API).
+│   ├── train.py                    # Train script: trains model and saves artifacts/model.pkl.
+│   └── predict.py                  # Prediction helpers to load model and predict programmatically.
+├── app/
+│   ├── __init__.py
+│   └── main.py                     # FastAPI application exposing /predict endpoint.
+├── tests/
+│   ├── __init__.py
+│   └── test_predictions.py         # Unit test ensuring prediction logic and API input handling.
+├── artifacts/
+│   └── model.pkl                   # Produced by training; serialized Pipeline + metadata (gitignored by default).
+├── images/                         # Saved figures from the notebook (gitignored in production).
+├── Dockerfile                      # Multi-stage Dockerfile optimized for small secure runtime image.
+├── Makefile                        # Developer shortcuts (install/test/train/run-app/lint).
+├── requirements.txt                # Python dependencies pinned (example version pins).
+├── .dockerignore
+├── .gitignore
+└── README.md                       # Project overview, setup, CI/CD notes, and usage.
+
+
+# bash-based command for building the codebase structure
+
+mkdir -p iris-softmax-classifier/{.github/workflows,data,notebooks,src,app,tests,artifacts,images} && \
+touch iris-softmax-classifier/.github/workflows/main.yml && \
+touch iris-softmax-classifier/data/iris.csv && \
+touch iris-softmax-classifier/notebooks/exploratory_data_analysis.ipynb && \
+touch iris-softmax-classifier/src/{__init__.py,config.py,data_processing.py,model.py,train.py,predict.py} && \
+touch iris-softmax-classifier/app/{__init__.py,main.py} && \
+touch iris-softmax-classifier/tests/{__init__.py,test_predictions.py} && \
+touch iris-softmax-classifier/artifacts/model.pkl && \
+touch iris-softmax-classifier/{Dockerfile,Makefile,requirements.txt,.dockerignore,.gitignore,README.md}

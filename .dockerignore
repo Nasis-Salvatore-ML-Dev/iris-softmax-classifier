@@ -1,0 +1,71 @@
+# -----------------------
+# Version control
+# -----------------------
+.git
+.gitignore
+.github/
+
+# -----------------------
+# Python cache and compiled files
+# -----------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# -----------------------
+# Virtual environments
+# -----------------------
+.venv/
+venv/
+env/
+tf_env_clean/
+
+# -----------------------
+# Development and local configs
+# -----------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# -----------------------
+# Notebooks, data, artifacts
+# -----------------------
+notebooks/
+data/
+artifacts/
+images/
+*.ipynb
+*.csv
+*.pkl
+*.joblib
+*.h5
+*.npy
+*.npz
+
+# -----------------------
+# Logs and temporary files
+# -----------------------
+*.log
+logs/
+tmp/
+temp/
+
+# -----------------------
+# Private or internal documentation
+# -----------------------
+docs/runbook.md
+
+# -----------------------
+# Build files and compressed outputs
+# -----------------------
+*.tar
+*.gz
+*.zip
+dist/
+build/
+.eggs/
+__docker_build__/
