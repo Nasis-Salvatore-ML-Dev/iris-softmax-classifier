@@ -79,6 +79,10 @@ images/
 # Scripts (build scripts not needed in runtime)
 scripts/
 
+
+# CI/CD
+echo "github-actions-key.json" >> .gitignore
+
 # IMPORTANT: Do NOT exclude these directories!
 # They are needed for the application to run:
 # - data/         (needed for training if no pre-trained model exists)
