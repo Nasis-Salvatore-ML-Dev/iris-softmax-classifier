@@ -56,8 +56,6 @@ notebooks/
 
 # Documentation
 docs/
-*.md
-README.md
 
 # Logs
 *.log
