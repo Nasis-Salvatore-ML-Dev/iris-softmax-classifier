@@ -1,0 +1,27 @@
+# =========================================================
+# Iris Softmax Classifier - Configuration File
+# =========================================================
+
+# Purpose: sets up hyperparameters, file paths, environment type, model
+
+project:
+  name: iris-softmax-classifier
+  version: 1.0.0
+  environment: dev
+
+data:
+  path: "data/iris.csv"
+  test_size: 0.2
+  random_state: 42
+
+model:
+  type: "softmax_regression"
+  solver: "lbfgs"
+  max_iter: 200
+  multi_class: "multinomial"
+
+artifacts:
+  model_path: "artifacts/model.pkl"
+
+logging:
+  level: "INFO"

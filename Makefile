@@ -91,8 +91,8 @@ validate: train
 	@$(CONDA_ACTIVATE) && python -c "\
 	import joblib; \
 	import os; \
-	assert os.path.exists('tuned_model.pkl'), '❌ Model artifact not found'; \
-	model = joblib.load('tuned_model.pkl'); \
+	assert os.path.exists('artifacts/tuned_model.pkl'), '❌ Model artifact not found'; \
+	model = joblib.load('artifacts/tuned_model.pkl'); \
 	assert 'pipeline' in model, '❌ Pipeline missing'; \
 	assert 'metrics' in model, '❌ Metrics missing'; \
 	assert 'target_names' in model, '❌ Target names missing'; \
@@ -142,7 +142,7 @@ git-status:
 	@echo "📄 Git status:"
 	@git status
 
-# add all changes
+# staging the files
 git-add:
 	@echo "➕ Staging all changes..."
 	@git add .
@@ -185,7 +185,7 @@ tag:
 
 
 # ==================== CLOUD DEPLOYMENT ====================
-deploy: validate
+deploy: validate-tuned
 	@echo "🚀 Deploying to Google Cloud Run..."
 	@chmod +x scripts/deploy.sh
 	@./scripts/deploy.sh

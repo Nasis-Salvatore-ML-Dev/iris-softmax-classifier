@@ -1,6 +1,5 @@
-# src/config.py
+import os
 from pathlib import Path
-
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -9,9 +8,15 @@ ARTIFACTS_DIR = ROOT / "artifacts"
 ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
 
 IRIS_CSV = DATA_DIR / "iris.csv"
-MODEL_PATH = ARTIFACTS_DIR / "tuned_model.pkl"  # <------ needs be changed with the tuned model if test is passed!!!!
 
-# Try loading from YAML if available
+MODEL_PATH = os.getenv(
+    "MODEL_PATH",
+    str(ARTIFACTS_DIR / "model.pkl")   # Default local model
+)
+# NOTE: cast to str because joblib.load expects a string path
+# ============================================
+
+# YAML config loading (unchanged)
 CONFIG_YAML = ROOT / "src" / "config.yaml"
 
 if CONFIG_YAML.exists():
@@ -23,7 +28,6 @@ if CONFIG_YAML.exists():
         "target_names", ["setosa", "versicolor", "virginica"]
     )
 else:
-    # Fallback defaults
     RANDOM_STATE = 42
     TEST_SIZE = 0.2
     TARGET_NAMES = ["setosa", "versicolor", "virginica"]

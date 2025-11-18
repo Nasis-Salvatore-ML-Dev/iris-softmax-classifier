@@ -1,71 +1,84 @@
-# -----------------------
-# Version control
-# -----------------------
-.git
-.gitignore
-.github/
-
-# -----------------------
-# Python cache and compiled files
-# -----------------------
+# Python cache
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
+*$py.class
 *.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# -----------------------
 # Virtual environments
-# -----------------------
 .venv/
 venv/
+ENV/
 env/
-tf_env_clean/
 
-# -----------------------
-# Development and local configs
-# -----------------------
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
+
+# OS
 .DS_Store
+Thumbs.db
 
-# -----------------------
-# Notebooks, data, artifacts
-# -----------------------
+# Git
+.git/
+.github/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+.hypothesis/
+
+# Jupyter
+.ipynb_checkpoints/
 notebooks/
-data/
-artifacts/
-images/
-*.ipynb
-*.csv
-*.pkl
-*.joblib
-*.h5
-*.npy
-*.npz
 
-# -----------------------
-# Logs and temporary files
-# -----------------------
+# Documentation
+docs/
+README.md
+
+# Logs
 *.log
-logs/
-tmp/
-temp/
 
-# -----------------------
-# Private or internal documentation
-# -----------------------
-docs/runbook.md
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
 
-# -----------------------
-# Build files and compressed outputs
-# -----------------------
-*.tar
-*.gz
-*.zip
-dist/
-build/
-.eggs/
-__docker_build__/
+# Deployment info files
+deployment_info.txt
+deployment_url.txt
+project_structure.txt
+
+# Images
+images/
+
+# Scripts
+scripts/
+
+# DO NOT EXCLUDE THESE - NEEDED FOR BUILD
+# data/
+# artifacts/
+# src/
+# app/
+# requirements.txt

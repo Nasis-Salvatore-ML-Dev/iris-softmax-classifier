@@ -108,7 +108,7 @@ gcloud run deploy ${SERVICE_NAME} \
   --cpu 1 \
   --timeout 300 \
   --max-instances 5 \
-  --set-env-vars PROJECT_ID=${PROJECT_ID},REGION=${REGION} \
+  --set-env-vars PROJECT_ID=${PROJECT_ID},REGION=${REGION},MODEL_PATH=/app/artifacts/tuned_model.pkl \
   --project=${PROJECT_ID}
 
 SERVICE_URL=$(gcloud run services describe ${SERVICE_NAME} \

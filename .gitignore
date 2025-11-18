@@ -1,97 +1,88 @@
-# -----------------------
-# Python general ignores
-# -----------------------
+# Python
 __pycache__/
 *.py[cod]
-\*.pyc
-*.pyo
-*.pyd
+*$py.class
 *.so
-*.egg
-*.egg-info/
-dist/
+.Python
 build/
+develop-eggs/
+dist/
+downloads/
+eggs/
 .eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
 
-# -----------------------
 # Virtual environments
-# -----------------------
 .venv/
 venv/
+ENV/
 env/
-tf_env_clean/
 
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# -----------------------
-# Jupyter notebooks
-# -----------------------
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+.github/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+*.cover
+.hypothesis/
+
+# Jupyter Notebook
 .ipynb_checkpoints/
 notebooks/
 
-# -----------------------
-# OS and editor artifacts
-# -----------------------
-.DS_Store
-Thumbs.db
-*.swp
-*.swo
-.idea/
-.vscode/
+# Documentation
+docs/
+*.md
+README.md
 
-# -----------------------
-# Data and model artifacts
-# -----------------------
-data/
-artifacts/
-images/
-*.pkl
-*.h5
-*.joblib
-*.csv
-*.tsv
-*.npy
-*.npz
-
-# -----------------------
-# Credentials and secrets
-# -----------------------
-.github/erasmus-472716-e1461659a2a0.json
-*.json
-*.yaml
-*.yml
-*.env
-secrets/
-config.json
-
-# -----------------------
-# Logs and temporary files
-# -----------------------
+# Logs
 *.log
-logs/
-tmp/
-temp/
 
-# -----------------------
-# Docker and cloud build outputs
-# -----------------------
-*.tar
-*.gz
-*.zip
-.cache/
-__docker_build__/
-cloudbuild.yaml
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
 
-# -----------------------
-# Private documentation
-# -----------------------
-docs/runbook.md
-deployment_and_operations_guide.md
+# Deployment files (don't need these in the image)
+deployment_info.txt
+deployment_url.txt
+project_structure.txt
 
-# -----------------------
-# Ignore compiled tests or reports
-# -----------------------
-coverage/
-htmlcov/
-*.coverage
-test-output/
+# Images (not needed for deployment)
+images/
 
+# Scripts (build scripts not needed in runtime)
+scripts/
+
+# IMPORTANT: Do NOT exclude these directories!
+# They are needed for the application to run:
+# - data/         (needed for training if no pre-trained model exists)
+# - artifacts/    (contains pre-trained models)
+# - src/          (application source code)
+# - app/          (FastAPI application)
+# - requirements.txt (needed for dependencies)
