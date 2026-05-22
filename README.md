@@ -1,247 +1,156 @@
-# **Iris Softmax Classifier — End-to-End MLOps Pipeline**
+# Iris Softmax Classifier — End-to-End MLOps Pipeline
 
-This repository contains a complete, production-ready machine learning system for classifying Iris flowers using a multinomial logistic regression (Softmax classifier).
-Beyond model training, the project implements a modern MLOps workflow inspired by practices used in large engineering organizations, including automated testing, CI/CD pipelines, containerized deployment, and service monitoring.
+A complete MLOps system built around a multinomial logistic regression (Softmax)
+classifier on the Iris dataset. The model itself is intentionally simple — the
+focus is the production infrastructure surrounding it: automated testing, CI/CD,
+containerised deployment, and operational monitoring.
 
-The objective was to design a system that moves reliably from experimentation to production, while maintaining reproducibility, test coverage, and operational visibility.
-
----
-
-## **Project Summary**
-
-The core model is a Softmax classifier trained on the Iris dataset.
-Initial performance reached ~93% accuracy. After systematic hyperparameter tuning using GridSearchCV, the optimized model achieved the following:
-
-```
-Best CV accuracy: 0.9667
-Test accuracy:    1.0000
-Best parameters:   {'clf__C': 10, 'clf__max_iter': 100, 'clf__tol': 0.0001}
-Training time:     7.07s
-```
-
-The trained models (`model.pkl`, `tuned_model.pkl`) are stored in the `artifacts/` directory and can be loaded for inference.
-
-A FastAPI service exposes a prediction endpoint:
-
-```
-POST /predict
-```
-
-The system is fully containerized with Docker and deployed to Google Cloud Run through an automated CI/CD pipeline.
+Built as a first end-to-end MLOps project before the BMW, aerospace, and fraud
+detection pipelines.
 
 ---
 
-## **Repository Structure**
+## Model Performance
+
+| Metric           | Value  |
+| ---------------- | ------ |
+| CV accuracy      | 0.9667 |
+| Test accuracy    | 1.0000 |
+| Best C           | 10     |
+| Best max_iter    | 100    |
+| Best tol         | 0.0001 |
+| Training time    | 7.07s  |
+
+> Test accuracy of 1.0000 reflects the Iris dataset's separability at optimised
+> hyperparameters — not a generalisation claim. CV accuracy (0.9667) is the
+> honest performance indicator.
+
+---
+
+## Architecture
 
 ```
-iris-softmax-classifier
-├── .github
-│   └── workflows
-│       └── main.yml
-├── .pytest_cache
-├── .venv
-├── app
-│   ├── __init__.py
-│   ├── init.py
-│   └── main.py
-├── artifacts
-│   ├── model.pkl
-│   └── tuned_model.pkl
-├── data
+GitHub push
+  └── CI (GitHub Actions)
+        ├── flake8 lint
+        ├── isort + black format check
+        ├── mypy type check
+        └── pytest (unit + integration + API tests)
+              └── merge to main → CD
+                    ├── docker build
+                    ├── push to Google Artifact Registry
+                    └── deploy to Cloud Run
+```
+
+**Runtime:**
+```
+Client → Cloud Run (FastAPI)
+           └── POST /predict → SoftmaxClassifier pipeline → species label
+```
+
+---
+
+## Core Capabilities
+
+**Reproducible environment**
+```bash
+make install    # Conda environment + dependencies
+```
+
+**Code quality**
+```bash
+make lint          # flake8
+make type-check    # mypy
+make test          # pytest unit + integration + API
+make test-coverage # pytest with coverage report
+```
+
+**Training and tuning**
+```bash
+make train              # baseline model → artifacts/model.pkl
+make tune               # GridSearchCV → artifacts/tuned_model.pkl
+make test-tuned-model   # evaluate tuned model
+```
+
+**Deployment**
+```bash
+make deploy    # Docker build → Artifact Registry → Cloud Run
+```
+
+**Local API**
+```bash
+make run-app        # start FastAPI server
+make test-prediction # send a test prediction
+```
+
+---
+
+## Project Structure
+
+```
+iris-softmax-classifier/
+├── .github/workflows/main.yml   # CI/CD pipeline
+├── app/
+│   └── main.py                  # FastAPI application
+├── artifacts/
+│   ├── model.pkl                # Baseline trained model
+│   └── tuned_model.pkl          # GridSearchCV-tuned model
+├── data/
 │   └── iris.csv
-├── docs
+├── docs/
 │   ├── deployment_and_operations_guide.md
 │   ├── ProcessMap.md
 │   └── runbook.md
-├── htmlcov
-│   └── (coverage reports)
-├── images
-│   ├── features_histogram.png
-│   └── pairplot_iris.png
-├── notebooks
-│   └── exploratory_data_analysis.ipynb
-├── scripts
+├── scripts/
 │   ├── ci_cd.sh
 │   ├── deploy.sh
-│   ├── featurestore_setup.sh
-│   ├── fetch_data.sh
-│   ├── fix_linting.sh
 │   └── monitor_health.sh
-├── src
-│   ├── __init__.py
-│   ├── config.py
-│   ├── config.yaml
-│   ├── data_processing.py
-│   ├── init.py
-│   ├── model.py
-│   ├── predict.py
-│   ├── train.py
-│   └── tune.py
-├── tests
-│   ├── test_api.py
-│   ├── test_data_processing.py
-│   ├── test_model.py
-│   ├── test_predictions.py
-│   └── test_train_integration.py
-├── tf_env_clean
-├── .coverage
-├── .dockerignore
-├── .gitignore
-├── Dockerfile
-├── Makefile
-├── project_structure.txt
-├── README.md
-└── requirements.txt
+├── src/
+│   ├── config.py                # Paths and YAML config loading
+│   ├── data_processing.py       # Load + train/test split
+│   ├── model.py                 # SoftmaxClassifier (sklearn Pipeline wrapper)
+│   ├── train.py                 # Training script with CV and artifact export
+│   ├── tune.py                  # GridSearchCV tuning script
+│   └── predict.py               # Inference utilities
+└── tests/
+    ├── test_api.py
+    ├── test_data_processing.py
+    ├── test_model.py
+    ├── test_predictions.py
+    └── test_train_integration.py
 ```
 
 ---
 
-## **Core Capabilities**
+## Monitoring
 
-### **1. Reproducible Environment**
-
-The project uses a Conda-based environment:
-
-```
-make install
-```
-
-This creates a dedicated environment and installs all dependencies, ensuring repeatable experiments and deployments.
-
----
-
-### **2. Code Quality and Testing**
-
-Quality gates include:
-
-- **flake8** for linting
-- **isort** and **black** for formatting
-- **mypy** for static type checking
-- **pytest** with coverage reports
-
-Commands:
-
-```
-make lint
-make type-check
-make test
-make test-coverage
-```
-
-The testing suite covers data preprocessing, model training, prediction correctness, API behavior, and integration with artifacts.
-
----
-
-### **3. Model Training and Tuning**
-
-Baseline training:
-
-```
-make train
-```
-
-Hyperparameter tuning with GridSearchCV:
-
-```
-make tune
-make test-tuned-model
-```
-
-This tuning process produced a model achieving **100% test accuracy** while maintaining strong cross-validation robustness.
-
----
-
-### **4. Deployment**
-
-The FastAPI application in `app/main.py` is containerized via Docker and deployed to Google Cloud Run.
-
-Deployment command:
-
-```
-make deploy
-```
-
-The deployment uses:
-
-- Google Artifact Registry
-- Cloud Run autoscaling
-- Fully managed HTTPS endpoint
-
----
-
-### **5. Monitoring**
-
-Operational monitoring includes:
+Operational metrics tracked via `scripts/monitor_health.sh`:
 
 - Latency (P50 / P95 / P99)
 - Error rates (4xx / 5xx)
-- CPU and memory
+- CPU and memory usage
 - Request volume
 - Cold-start performance
-- Instance count and autoscaling behavior
-
-A monitoring script is included:
-
-```
-scripts/monitor_health.sh
-```
+- Instance count and autoscaling behaviour
 
 ---
 
-### **6. CI/CD Pipeline**
+## Engineering Decisions
 
-The workflow in:
+**Why Iris and Softmax?** The dataset and model are deliberately simple — the
+goal was to build and validate the full MLOps stack (testing, CI/CD, containers,
+cloud deployment, monitoring) without model complexity getting in the way. The
+same infrastructure patterns scale directly to the subsequent BMW, aerospace, and
+fraud detection projects.
 
-```
-.github/workflows/main.yml
-```
-
-implements:
-
-1. Linting
-2. Testing
-3. Docker image build
-4. Push to Artifact Registry
-5. Deployment to Cloud Run
-
-Every push to the `main` branch automatically updates the production service.
-
-This mirrors the deployment processes used in modern ML engineering teams.
+**Why Cloud Run over Lambda?** This project predates the AWS Lambda work. Cloud
+Run on GCP was the natural choice given the GCP stack used throughout the
+portfolio.
 
 ---
 
-## **Running the System Locally**
+## Context
 
-Start the API:
-
-```
-make run-app
-```
-
-Send a test prediction:
-
-```
-make test-prediction
-```
-
----
-
-## **Training Models Locally**
-
-Basic training:
-
-```
-make train
-```
-
-Tuning:
-
-```
-make tune
-```
-
-Check the tuned model’s output:
-
-```
-make test-tuned-model
-```
+First production MLOps project in the portfolio. Patterns established here —
+CI/CD with quality gates, containerised deployment, artifact management, API
+serving — were carried forward and extended in all subsequent projects.
